@@ -1,5 +1,7 @@
 import{Router} from 'express'
 import { authentication } from '../../middlewares/auth.middleware.js';
+import UserModel from '../../DB/models/User.Model.js';
+import messageModel from '../../DB/models/Messages.Model.js';
 
 const router =Router()
 
@@ -8,7 +10,7 @@ router.post("/sendMessage",async(req,res)=>{
     if(!receiverId || !content){
         return res.status(400).json({message:"receiverId and content are required"});
     }
-    if (!await userModel.findById(receiverId)) {
+    if (!await UserModel.findById(receiverId)) {
         return res.status(400).json({
             message:'this user is not found'
         });
