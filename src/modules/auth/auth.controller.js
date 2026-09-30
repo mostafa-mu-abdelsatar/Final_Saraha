@@ -17,7 +17,7 @@ router.post('/signup',async(req, res, next)=>{
         }
         const hashedPass = bcrypt.hashSync(password, 10)
         await UserModel.insertOne({userName, email, password:hashedPass, phone, age, gender})
-        return res.status(201).json({message:"you signed up successfuly"})
+        return res.status(201).json({message:"user created successfully" })
     } catch (error) {
         return res.status(500).json({message:"server error", message:error.message, stack:error.stack})
     }
@@ -38,7 +38,7 @@ router.post('/login',async(req, res, next)=>{
             return res.status(404).json({message:'the email or password not correct'})
         }
         const token = jwt.sign({_id:existUser._id, isLogged:true}, 'Your_Secret_Key', {expiresIn:'30m'})
-        return res.status(200).json({message:"user loged in done", token})        
+        return res.status(200).json({message:"user logged in successfully", token})        
     } catch (error) {
         return res.status(500).json({message:"server error", message:error.message, stack:error.stack})
     }
